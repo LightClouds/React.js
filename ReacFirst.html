@@ -3,8 +3,80 @@
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
+    <script src="react-0.13.2/build/react.js"></script>
+    <script src="react-0.13.2/build/JSXTransformer.js"></script>
 </head>
 <body>
-
+<div id="example"></div>
+<div id="example2"></div>
+<script type="text/jsx">
+    //定义的一个demo     react.js
+    var example = document.getElementById('example');
+    var example2 = document.getElementById('example2');
+    var HelloMessage = React.createClass({
+        render:function(){
+            return <div className='test'>hell {this.props.name}</div>;
+        }
+    });
+    React.render(<HelloMessage name='john'/>,example);
+    //定义样式style
+    var style = {
+        color:'red',
+        border:'1px black solid'
+    };
+    React.render(<div style={style}><HelloMessage name='john'/></div>,example);//外面包裹标签，应用css样式
+    var Hello = React.createClass({
+        //第二种就是创建一个变量
+        getName:function(){
+          if(this.props.name){
+              return this.props.name;
+          }else{
+              return 'World'
+          }
+        },
+        render:function(){
+            var name = this.getName();
+            return <div className="text">hello {this.props.name ? this.props.name : "world"}</div>;//第一种三元表达式
+            return <div className="text">hello {name}</div>;//第二种
+            return <div className="text">hello {this.getName()}</div>; //第三种直接在大括号中调用函数
+            return <div className="text"> hello {this.props.name || 'world'}</div>;  //比较运算符，如果前面返回的是真，就返回前面的，如果为假，返回后面的。
+        }
+    });
+    React.render(<Hello name="Bob"/>,example);
+    var Bob = React.createClass({
+        render:function(){
+            return <div className="text">hello {
+                (function(obj){
+                    if(obj.props.name){
+                        return obj.props.name
+                    }else{
+                        return 'World'
+                    }
+                }(this))
+            }</div>;//第一种三元表达式
+        }
+    });
+    React.render(<Bob name="meizi"/>,example);
+    //非DOM属性的介绍 dangerouslySetInnerHTML，ref，key
+    /*
+    * 1 dangerouslySetInnerHTML 主要用于动态生成的html代码
+    * 2 ref 父组件引用子组件
+    * 3 key 提高宣荣的性能
+    * */
+    var rawHtml = {
+        __html:"<h1>I'm inner HTML</h1>"
+    };
+    var Danger = React.createClass({
+        render:function(){
+            return <p className="text">hello world</p>;
+            return <ul>
+                <li key="1">1</li>
+                <li key="2">2</li>
+                <li key="3">3</li>
+            </ul>   //这里的可以就是唯一的标识，在这个组建的内部key值不能相同
+        }
+    });
+    React.render(<div dangerouslySetInnerHTML={rawHtml}></div>,document.body);
+</script>
 </body>
 </html>
