@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+
+
+
+<script src="react-0.13.2/build/react.js"></script>
+<script src="react-0.13.2/build/JSXTransformer.js"></script>
+<script type="text/jsx">
+    //执行的一个顺序状态
+    var Danger = React.createClass({
+        getDefaultProps:function(){
+            console.log('getDefaultProps   1');
+        },
+        getInitialState:function(){
+            console.log('getInitialState   2');
+            return null;
+        },
+        componentWillMount:function(){
+            console.log('componentWillMount   3');
+        },
+        render:function(){
+            console.log('render   4');
+            return <p className="text">hello    {this.props.name ? this.props.name : 'World'}</p>;
+        },
+        componentDidMount:function(){
+            console.log('componentDidMount   5');
+        }
+    });
+    React.render(<Danger/>,document.body);
+    //父子组件的引用
+    var Hello = React.createClass({
+        getInitialState:function(){
+            return {name:''};
+        },
+        handleChange:function(event){
+            this.setState({name:event.target.value})
+        },
+        render:function(){
+            return <div>
+                <Danger name={this.state.name}></Danger><br/>
+                <input type="text" onChange={this.handleChange}/>
+            </div>
+        }
+    });
+    React.render(<Hello/>,document.body);//实现angluar.js中的数据双向的绑定
+
+</script>
+</body>
+</html>
