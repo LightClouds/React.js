@@ -49,6 +49,24 @@
     });
     React.render(<Hello/>,document.body);//实现angluar.js中的数据双向的绑定
 
+    //进行中的函数,提供的方法
+    var HelloWorld = React.createClass({
+        componentWillReceiveProps:function(){},
+        shouldComponentUpdate:function(){return true},
+        componentWillUpdate:function(){},
+        render:function(){
+            return <p>Hello,{this.props.name ? this.props.name : 'World'}</p>
+        },
+        componentDidUpdate:function(){},
+        componentWillUnmount:function(){
+            console.log('组件销毁时执行的东西');
+            console.log('这里需要删除东西哦')
+        }
+    });
+
+    //组件销毁阶段的可以使用的函数
+    //componentWillUnmount  做一些清理工作，定时器等
+
 </script>
 </body>
 </html>
