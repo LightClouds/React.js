@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+
+
+
+<script src="react-0.13.2/build/react.js"></script>
+<script src="react-0.13.2/build/JSXTransformer.js"></script>
+<script type="text/jsx">
+
+    var Hell = React.createClass({
+        render:function(){
+            return <p>Hello ,{this.props.name1+'--'+this.props.name2}</p>
+        }
+    });
+    var HelloWorld = React.createClass({
+        getInitialState:function(){
+            return {
+                name1:'John',
+                name2:'Bob'
+            }
+        },
+        render:function(){
+            return <div><Hell {...this.state}/></div>
+        }
+    });
+    //React.render(<HelloWorld/>,document.body)
+
+    //状态的含义和用法  类似于angular.js的数据的双向绑定
+    var State = React.createClass({
+        render:function(){
+            return <div>动态的变化，{this.props.name}</div>
+        }
+    });
+    var FatherState = React.createClass({
+        getInitialState:function(){
+            return {name:'Tim'};
+        },
+        handlerChange:function(event){
+          return this.setState({name:event.target.value})
+        },
+        render:function(){
+            return <div>
+                <State name={this.state.name}></State>
+                <br/>
+                <input type="text" onChange={this.handlerChange}/>
+            </div>
+        }
+    });
+    React.render(<FatherState/>,document.body);
+
+
+</script>
+</body>
+</html>
